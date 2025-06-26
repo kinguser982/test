@@ -1,0 +1,53 @@
+name: File-to-link
+
+on:
+  workflow_dispatch:
+    inputs:
+      FILE_LINK:
+        description: 'file link'
+        required: true
+        default: 'https://dlcdnets.asus.com/pub/ASUS/mb/14Utilities/Armoury_Crate_Full_Installation_Package.zip?model=Armoury%20Crate'
+
+jobs:
+  build:
+    name: File downloader by ${{ github.actor }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Getting tools ready 
+      run: |
+        apt-get install rar
+        apt-get install wget
+    
+    - name: Downloading file from Oreginal website
+      run: |
+        mkdir drive && cd drive
+        wget ${{ env.FILE_LINK }}
+        for filename in $(ls)
+        do
+        echo "FILE_NAME=$filename" >> $GITHUB_ENV
+        done;
+    - name: Check file size
+      run: |
+        if [[ $(stat -c '%s' *.*) -gt 2147483648 ]]; then
+        echo "The File is larger than 2GB"
+        cd Exit
+        else
+        echo "File is smaller than or equal to 2GB"
+        fi
+    - name: Set Build Date 
+      run: |
+        echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+        
+    - name: Upload to Github
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          Gdrive/*.*
+        name: ${{ env.FILE_NAME }} // ${{ env.BUILD_DATE }}
+        tag_name: ${{ github.run_id }}
+        body: |
