@@ -6,7 +6,7 @@ on:
       FILE_LINK:
         description: 'file link'
         required: true
-        default: 'https://dlcdnets.asus.com/pub/ASUS/mb/14Utilities/Armoury_Crate_Full_Installation_Package.zip?model=Armoury%20Crate'
+        default: 'https://dlcdnets.asus.com/pub/ASUS/mb/14Utilities/Armoury_Crate_Full_Installation_Package.zip'
 
 jobs:
   build:
@@ -33,6 +33,7 @@ jobs:
       run: |
         cd drive
         rar a -v2g ${{ env.FILE_ID }}.rar ${{ env.FILE_ID }}
+        ls -la
     - name: Set Build Date 
       run: |
         echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
