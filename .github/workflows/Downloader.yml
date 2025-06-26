@@ -20,8 +20,8 @@ jobs:
 
     - name: Getting tools ready 
       run: |
-        apt-get install rar
-        apt-get install wget
+        sudo apt-get install rar
+        sudo apt-get install wget
     
     - name: Downloading file from Oreginal website
       run: |
