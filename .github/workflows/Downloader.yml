@@ -32,7 +32,7 @@ jobs:
     - name: Processing File
       run: |
         cd drive
-        rar a -v2g ${{ env.FILE_ID }}.rar ${{ env.FILE_ID }}
+        rar a -v2000m ${{ env.FILE_ID }}.rar ${{ env.FILE_ID }}
         rm ${{ env.FILE_ID }}
         ls -la
     - name: Set Build Date 
