@@ -26,7 +26,7 @@ jobs:
     - name: Downloading file from Oreginal website
       run: |
         mkdir drive && cd drive
-        wget ${{ env.FILE_LINK }}
+        wget ${{ github.event.inputs.FILE_LINK }}
         for filename in $(ls)
         do
         echo "FILE_NAME=$filename" >> $GITHUB_ENV
