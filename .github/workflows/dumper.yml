@@ -65,7 +65,7 @@ jobs:
           git config --global user.name "kinguser981@gmail.com"
           cd ./DumprX/out/
           git init
-          git config --global http.postBuffer 5368709120
+          git config --global http.postBuffer 524288000
           git add *
           git commit -m "${{ github.event.inputs.COMMIT_MESSAGE }}"
           git branch -M ${{ github.event.inputs.DEVICE_BRANCH }}
