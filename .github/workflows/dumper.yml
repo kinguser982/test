@@ -46,6 +46,11 @@ jobs:
       run: |
         cd DumprX
         ./dumper.sh ${{ github.event.inputs.FILE_LINK }}
+        cd out
+        ls -la
+        rm -rf system
+        rm -rf system_ext
+        rm -rf mi_ext
         
     - name: Set Build Date 
       run: |
