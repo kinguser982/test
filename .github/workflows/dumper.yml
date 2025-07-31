@@ -1,0 +1,39 @@
+name: dumper
+
+on:
+  workflow_dispatch:
+    inputs:
+      FILE_LINK:
+        description: 'file link'
+        required: true
+        default: 'https://github.com/kinguser981/Gdrive-File-to-Direct-Link/releases/download/11831155293/SAMFW.COM_SM-J700H_THR_J700HXXS3BRL3_fac.zip'
+        
+jobs:
+  build:
+    name: dumper by ${{ github.actor }}
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Getting tools ready 
+      run: |
+        pip install gdown 
+        python3 convertor.py ${{ github.event.inputs.FILE_LINK }} > link.txt
+        echo "FILE_ID=$(<link.txt)" >> $GITHUB_ENV
+    - name: Set Build Date 
+      run: |
+        echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+    - name: Upload to Github
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          Gdrive/*.*
+        name: ${{ env.FILE_NAME }} // ${{ env.BUILD_DATE }}
+        tag_name: ${{ github.run_id }}
+        body: |
