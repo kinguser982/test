@@ -7,6 +7,27 @@ on:
         description: 'file link'
         required: true
         default: 'https://github.com/kinguser981/Gdrive-File-to-Direct-Link/releases/download/11831155293/SAMFW.COM_SM-J700H_THR_J700HXXS3BRL3_fac.zip'
+      DEVICE_BRANCH:
+        description: 'your device branch name (Optional)'
+        required: true
+        default: 'android-16'
+      GITHUB_TOKEN:
+        description: 'your github Access token (Optional)'
+        required: true
+        default: 'XXXXXXXXXXXXXXXXXXXXXXXXXX'
+      EMPTY_REPO:
+        description: 'your empty repo name on github (Optional)'
+        required: true
+        default: 'android_device_samsung_a05s.git'
+      COMMIT_MESSAGE:
+        description: 'your commit message (Optional)'
+        required: true
+        default: 'device tree'
+      PUSH_GITHUB:
+        description: 'Push to GitHub Repository.'
+        type: boolean
+        required: true
+        default: false
         
 jobs:
   build:
@@ -31,7 +52,20 @@ jobs:
     - name: Set Build Date 
       run: |
         echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+    - name: Push to GitHub
+      run: |
+          git config --global user.email "Samuel Kendall"
+          git config --global user.name "kinguser981@gmail.com"
+          cd ./DumprX/out/
+          git init
+          git add *
+          git commit -m "${{ github.event.inputs.COMMIT_MESSAGE }}"
+          git branch -M ${{ github.event.inputs.DEVICE_BRANCH }}
+          git remote add origin git@github.com:${{ github.actor }}/${{ github.event.inputs.EMPTY_REPO }}
+          git remote set-url origin https://${{ github.actor }}:${{ github.event.inputs.GITHUB_TOKEN }}@github.com/${{ github.actor }}/${{ github.event.inputs.EMPTY_REPO }}
+          git push -u origin ${{ github.event.inputs.DEVICE_BRANCH }}
     - name: Upload to Github
+      if: github.event.inputs.PUSH_GITHUB == 'true'
       uses: softprops/action-gh-release@v1
       with:
         files: |
