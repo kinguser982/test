@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       FILE_LINK:
-        description: 'file link'
+        description: 'Firmware Link'
         required: true
         default: 'https://github.com/kinguser981/Gdrive-File-to-Direct-Link/releases/download/11831155293/SAMFW.COM_SM-J700H_THR_J700HXXS3BRL3_fac.zip'
       DEVICE_BRANCH:
@@ -60,12 +60,9 @@ jobs:
           git remote add origin git@github.com:${{ github.actor }}/${{ github.event.inputs.EMPTY_REPO }}
           git remote set-url origin https://${{ github.actor }}:${{ github.event.inputs.GITHUB_TOKEN }}@github.com/${{ github.actor }}/${{ github.event.inputs.EMPTY_REPO }}
           git push -u origin ${{ github.event.inputs.DEVICE_BRANCH }}
-    - name: Upload to Github
-      if: github.event.inputs.PUSH_GITHUB == 'true'
+    - name: Add to Github release
       uses: softprops/action-gh-release@v1
       with:
-        files: |
-          Gdrive/*.*
-        name: ${{ env.FILE_NAME }} // ${{ env.BUILD_DATE }}
-        tag_name: ${{ github.run_id }}
+        name: ${{ github.event.inputs.COMMIT_MESSAGE }} // ${{ env.BUILD_DATE }} 
+        tag_name: Extracted Firmware Link https://github.com/${{ github.actor }}/${{ github.event.inputs.EMPTY_REPO }} 
         body: |
