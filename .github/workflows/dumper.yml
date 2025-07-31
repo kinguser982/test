@@ -23,9 +23,11 @@ jobs:
       
     - name: Getting tools ready 
       run: |
-        pip install gdown 
-        python3 convertor.py ${{ github.event.inputs.FILE_LINK }} > link.txt
-        echo "FILE_ID=$(<link.txt)" >> $GITHUB_ENV
+        git clone https://github.com/DumprX/DumprX.git
+        cd DumprX
+        sudo ./setup.sh
+        ./dumper.sh ${{ github.event.inputs.FILE_LINK }}
+        
     - name: Set Build Date 
       run: |
         echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
