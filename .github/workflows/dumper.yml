@@ -6,7 +6,7 @@ on:
       FILE_LINK:
         description: 'Firmware Link'
         required: true
-        default: 'https://github.com/kinguser981/Gdrive-File-to-Direct-Link/releases/download/11831155293/SAMFW.COM_SM-J700H_THR_J700HXXS3BRL3_fac.zip'
+        default: 'https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/OS2.0.203.0.VMRMIXM/marble_global-ota_full-OS2.0.203.0.VMRMIXM-user-15.0-22893f0590.zip'
       DEVICE_BRANCH:
         description: 'your device Firmware version.'
         required: true
