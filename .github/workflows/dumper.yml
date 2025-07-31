@@ -47,6 +47,7 @@ jobs:
     - name: Set Build Date 
       run: |
         echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+        
     - name: Push to GitHub
       run: |
           git config --global user.email "Samuel Kendall"
