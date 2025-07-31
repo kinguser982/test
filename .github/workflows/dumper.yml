@@ -37,11 +37,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       
-    - name: Getting tools ready 
+    - name: Getting tools ready !
       run: |
         git clone https://github.com/DumprX/DumprX.git
         cd DumprX
         sudo ./setup.sh
+    - name: Download and extracting !
+      run: |
+        cd DumprX
         ./dumper.sh ${{ github.event.inputs.FILE_LINK }}
         
     - name: Set Build Date 
