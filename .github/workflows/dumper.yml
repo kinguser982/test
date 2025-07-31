@@ -26,7 +26,7 @@ on:
         
 jobs:
   build:
-    name: dumper by ${{ github.actor }}
+    name: Dumping by ${{ github.actor }}
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
