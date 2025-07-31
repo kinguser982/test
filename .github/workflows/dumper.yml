@@ -51,6 +51,9 @@ jobs:
         rm -rf system
         rm -rf system_ext
         rm -rf mi_ext
+        rm -rf modem
+        rm -rf product
+        rm -rf odm
         
     - name: Set Build Date 
       run: |
